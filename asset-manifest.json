@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ReackHooks/static/css/main.9e130c80.css",
+    "main.js": "/ReackHooks/static/js/main.cd873f9f.js",
+    "static/js/787.b0657457.chunk.js": "/ReackHooks/static/js/787.b0657457.chunk.js",
+    "index.html": "/ReackHooks/index.html",
+    "main.9e130c80.css.map": "/ReackHooks/static/css/main.9e130c80.css.map",
+    "main.cd873f9f.js.map": "/ReackHooks/static/js/main.cd873f9f.js.map",
+    "787.b0657457.chunk.js.map": "/ReackHooks/static/js/787.b0657457.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9e130c80.css",
+    "static/js/main.cd873f9f.js"
+  ]
+}
