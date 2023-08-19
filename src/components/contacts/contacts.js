@@ -1,102 +1,77 @@
 import React from "react";
 import "./contacts.css";
 import  Contact from "../contact/contact";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 
 function Contacts({ contacts }) {   
     
-    let [startContact, setContact] = useState(contacts);
-    let [male, setMale] = useState(false);
-    let [female, setFemale] = useState(false);
-    let [unKnown, setUnKnown] = useState(false);    
+    let [startContact, setContact] = useState(contacts);        
     let [searchText, setSearchTxt] = useState(``);
+    let [searchGender, setGender] = useState({ male: true, female: true, unknown: true});
 
-    function handleSearchChange(event){ 
-        setSearchTxt(event.target.value);        
-    };    
-    function Male() {         
-            if (!male) {
-                const filterMale = contacts.filter((item) => {
-                    return (
-                        item.gender === 'male'
-                    );
-                });
-                setContact(filterMale);
-                setMale(true);
-                setFemale(false);
-                setUnKnown(false);
-                
-        } 
-            else if (male) {
-                setContact(contacts)
-                setMale(false)
-        }
+    function handleSearchChange(event) {
+        setSearchTxt(event.target.value);
+        filter(event)
     }
 
-    function Female() {   
-            if (!female) {
-                const filterMale = contacts.filter((item) => {
-                    return (
-                        item.gender === 'female'
-                    );
-                });
-                setContact(filterMale);
-                setFemale(true);
-                setMale(false);
-                setUnKnown(false);
-                
-        } 
-            else if (female) {
-                setContact(contacts)
-                setFemale(false)
-        }
+    function handleCheckedChange(event) {
+        setGender({ ...searchGender, [event.target.id]: event.target.checked })
+        filterGender(event)
+        
     }
 
-    function UnKnown() {              
-            if (!unKnown) {
-                const filterMale = contacts.filter((item) => {
-                    return (
-                        item.gender === undefined
-                    );
-                });
-                setContact(filterMale);
-                setUnKnown(true);
-                setFemale(false);
-                setMale(false);
-        } 
-            else if (unKnown) {
-                setContact(contacts)
-                setUnKnown(false)
-        }
+    function getFilterGender(check, filterContacts) {
+        let cheacked = [];
+        let contactsList = filterContacts || contacts;
+        console.log(searchGender)
+        for (const key in check) {
+            if (check[key] === true) {
+                if (key === 'unknown') cheacked.push(undefined);
+                cheacked.push(key)
+            }
+        }        
+        return contactsList.filter((item) => {
+            return (
+                cheacked.includes(item.gender)
+           )
+        })
+    }
+
+    function filterGender(event) {
+        let check = {...searchGender, [event.target.id]: event.target.checked};
+        let filterContacts = getFilterGender(check);
+        setContact(filterContacts)
     }
 
 
-
-    useEffect(()=>{
-        const filterContacts = contacts.filter((item) => {            
+    function getFilterContacts (searchText, filterContacts) {
+        let contactsList = filterContacts || contacts;
+        return contactsList.filter((item) => {
             return (
                 item.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
                 item.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
                 item.phone.includes(searchText)
-             );
+            );
         });
-        setContact(filterContacts);
-    }, [searchText]);
+    }
     
-   
+   function filter(event){
+    let filterContacts = getFilterContacts(event.target.value);
+    setContact(filterContacts)
+    }
 
     return (<nav className='nav conteiner'>
-        <input className='nav_input' value={searchText} onChange={handleSearchChange} placeholder="Search"></input>
-        <div>
-            <button className='button male'  onClick={Male}>M</button>
-            <button className='button female' onClick={Female}>F</button>
-            <button className='button  unknown' onClick={UnKnown} >U/K</button>            
+        <input type="input" className='nav_input' value={searchText} onChange={handleSearchChange} placeholder="Search"></input>
+        <div className="cheakbox">
+            <label>Male<input type="checkbox" id="male" checked={searchGender.male} onChange={handleCheckedChange} /></label>
+            <label>Female<input type="checkbox" id="female" checked={searchGender.female} onChange={handleCheckedChange}/></label>
+            <label>Unknow<input type="checkbox" id="unknown"  checked={searchGender.unknown} onChange={handleCheckedChange}/></label>
         </div>
         <>
             {startContact.map(item =><Contact key ={item.id} user ={item}/>)}
         </>
       </nav>)
 }
-// {stateContacts.map(item => <Contact key={item.id} contact={item}/>)}
+
 export default Contacts

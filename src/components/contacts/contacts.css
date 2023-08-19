@@ -13,24 +13,11 @@
     font-size: 20px;
     color: white;
     font-weight: bold;
+    margin-bottom: 5px;
 }
-.button{
-    margin-top: 5px;
-    margin-left: 3px;
-    border: solid 2px white ;
+.cheakbox{
     color: white;
-    border-radius: 5px;
 }
-.male{
-    background-color: blue;
-}
-.female{
-    background-color: rgb(200, 15, 157);
-}
-.unknown{
-    background-color: darkgreen;
-}
-.button:hover{
-    font-size: 17px;
-    color: rgb(44, 208, 15);
+label{
+       margin: 5px;
 }
