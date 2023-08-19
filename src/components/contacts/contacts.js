@@ -38,13 +38,6 @@ function Contacts({ contacts }) {
         })
     }
 
-    function filterGender(event) {
-        let check = {...searchGender, [event.target.id]: event.target.checked};
-        let filterContacts = getFilterGender(check);
-        setContact(filterContacts)
-    }
-
-
     function getFilterContacts (searchText, filterContacts) {
         let contactsList = filterContacts || contacts;
         return contactsList.filter((item) => {
@@ -59,6 +52,16 @@ function Contacts({ contacts }) {
    function filter(event){
     let filterContacts = getFilterContacts(event.target.value);
     setContact(filterContacts)
+    }
+
+    function filterGender(event) {
+        let check = {...searchGender, [event.target.id]: event.target.checked};
+        let filterContacts = getFilterGender(check);
+        
+        if (searchText.length > 0) {
+            filterContacts = getFilterContacts(searchText,filterContacts)
+        }
+        setContact(filterContacts)
     }
 
     return (<nav className='nav conteiner'>
