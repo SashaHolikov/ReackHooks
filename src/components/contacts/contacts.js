@@ -59,9 +59,11 @@ function Contacts({ contacts }) {
         let filterContacts = getFilterGender(check);
         
         if (searchText.length > 0) {
-            filterContacts = getFilterContacts(searchText,filterContacts)
+            filterContacts = getFilterContacts(searchText, filterContacts)
+            setContact(filterContacts)
+        } else {
+            setContact(filterContacts)
         }
-        setContact(filterContacts)
     }
 
     return (<nav className='nav conteiner'>
